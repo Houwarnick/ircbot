@@ -36,6 +36,7 @@ from apis.urbandic import urbanDict
 from apis.lastfm import getCurrentSong
 from apis.rottentomatoes import rottentomatoes
 from apis.reddit import getSubReddit, getQuote
+from apis.mtgCardRequest import mtgCardRequest
 from random import randint
 import ConfigParser
 import json
@@ -405,6 +406,21 @@ class LogBot(irc.IRCClient):
                     self.msg(channel, possible_ansers[randint(0, 5)].encode('utf-8'))
                 except:
                     self.logError(channel)
+
+	    elif parts[1] == 'mtg':
+		try:
+		    
+                    cardname = ' '.join( parts[2:])
+		    price_response = mtgCardRequest(cardname)
+         	    if price_response:
+			price_response_msg = 'The Prices for {0} are {1}, {2}, {3}'.format(
+				cardname,
+				price_response['Low'],
+				price_response['Median'],
+			 	price_response['High']) 
+			self.msg(channel, price_response_msg)
+		except Exception as e:
+		    self.logError(channel)
 
 
         #==========================================================================================
