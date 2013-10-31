@@ -204,6 +204,7 @@ class LogBot(irc.IRCClient):
                     \nsong <lastfm user>\
                     \nmovie <movie name>\
                     \nreddit <subreddit> <# of links optional>\
+                    \nmtg <card name>\
                     \nor just ask me a question'
                     self.msg(user, help_msg)
                 except Exception as e:
@@ -413,7 +414,7 @@ class LogBot(irc.IRCClient):
                     cardname = ' '.join( parts[2:])
 		    price_response = mtgCardRequest(cardname)
          	    if price_response:
-			price_response_msg = 'The Prices for {0} are {1}, {2}, {3}'.format(
+			price_response_msg = 'The prices for {0} are:\nLow: {1}\nMedian: {2}\nHigh: {3}'.format(
 				cardname,
 				price_response['Low'],
 				price_response['Median'],
